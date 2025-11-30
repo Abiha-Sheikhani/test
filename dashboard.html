@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #F7E1F0; /* light pink */
+      color: #6A4C93; /* purple */
+      font-family: 'Poppins', sans-serif;
+      padding: 30px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #A87A87;
+      margin-bottom: 30px;
+      font-weight: 600;
+    }
+
+    table {
+      width: 80%;
+      margin: auto;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    th {
+      background-color: #6A4C93;
+      color: #fff;
+      text-align: center;
+    }
+
+    td {
+      text-align: center;
+    }
+
+    button#logoutBtn {
+      display: block;
+      margin: 20px auto 0;
+      background-color: #A87A87;
+      border: none;
+      color: white;
+      padding: 10px 25px;
+      border-radius: 5px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button#logoutBtn:hover {
+      background-color: #6A4C93;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>User Dashboard</h2>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td id="userId">Loading...</td>
+        <td id="userName">Loading...</td>
+        <td id="userEmail">Loading...</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button id="logoutBtn">Logout</button>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>

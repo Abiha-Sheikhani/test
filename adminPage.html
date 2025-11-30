@@ -4,8 +4,168 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        :root {
+          --purple: #A87A87;
+          --light-pink: #F7E1F0;
+          --dark-purple: #6A4C93;
+          --white: #ffffff;
+        }
+      
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: "Poppins", sans-serif;
+        }
+      
+        body {
+          background-color: var(--light-pink);
+          color: var(--dark-purple);
+        }
+      
+        .wrapper {
+          max-width: 900px;
+          margin: 0 auto;
+          padding: 20px;
+        }
+      
+        /* Navbar */
+        .navbar {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background-color: var(--purple);
+          padding: 15px 30px;
+          border-radius: 10px;
+          margin-bottom: 30px;
+        }
+      
+        .navbar .logo {
+          font-size: 24px;
+          font-weight: bold;
+          color: var(--white);
+        }
+      
+        .navbar .nav-links a {
+          color: var(--white);
+          text-decoration: none;
+          margin-left: 20px;
+          font-weight: 500;
+          transition: color 0.3s;
+        }
+      
+        .navbar .nav-links a:hover {
+          color: var(--light-pink);
+        }
+      
+        /* Container */
+        .container {
+          background-color: var(--white);
+          padding: 30px;
+          border-radius: 15px;
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+      
+        .container h2 {
+          margin-bottom: 20px;
+          color: var(--purple);
+          text-align: center;
+        }
+      
+        /* Form */
+        label {
+          display: block;
+          margin-bottom: 5px;
+          font-weight: 500;
+        }
+      
+        input {
+          width: 100%;
+          padding: 10px 12px;
+          margin-bottom: 15px;
+          border: 2px solid var(--purple);
+          border-radius: 8px;
+          outline: none;
+          transition: border-color 0.3s, box-shadow 0.3s;
+        }
+      
+        input:focus {
+          border-color: var(--dark-purple);
+          box-shadow: 0 0 5px var(--dark-purple);
+        }
+      
+        /* Button */
+        button {
+          background-color: var(--purple);
+          color: var(--white);
+          padding: 12px 20px;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          font-size: 16px;
+          font-weight: bold;
+          transition: background-color 0.3s;
+        }
+      
+        button:hover {
+          background-color: var(--dark-purple);
+        }
+      
+        /* Responsive */
+        @media (max-width: 600px) {
+          .navbar {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+      
+          .navbar .nav-links a {
+            margin-left: 0;
+            margin-top: 10px;
+          }
+        }
+      </style>
+      
 </head>
 <body>
-    
+<div class="wrapper">
+  <div class="navbar">
+    <div class="logo">Admin Panel</div>
+    <div class="nav-links">
+
+      <a href="#" id="logoutbtn">Logout</a>
+      <a href="dashboard.html">Dashboard</a>
+    </div>
+  </div>
+
+
+  <div class="container">
+    <h2>Add New Question</h2>
+
+    <label>Question</label>
+    <input type="text" id="question" placeholder="Enter question">
+
+    <label>Option 1</label>
+    <input type="text" id="op1" placeholder="Enter option 1">
+
+    <label>Option 2</label>
+    <input type="text" id="op2" placeholder="Enter option 2">
+
+    <label>Option 3</label>
+    <input type="text" id="op3" placeholder="Enter option 3">
+
+    <label>Option 4</label>
+    <input type="text" id="op4" placeholder="Enter option 4">
+    <label>Write the Answer</label>
+    <input type="text" id="rightAnswer" placeholder="Enter correct answer" />
+
+
+    <button id="saveBtn">Save Question</button>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="admin.js"></script>
 </body>
 </html>

@@ -71,6 +71,8 @@ btn &&
     } catch (error) {
       console.log(error);
     }
+
+    
   });
 
 //loginn functionalityyy
@@ -80,97 +82,56 @@ const loginPassword = document.getElementById("loginPassword");
 const loginBtn = document.getElementById("loginBtn");
 
 loginBtn &&
-  loginBtn.addEventListener("click", async () => {
-    try {
-      if (!loginEmail.value || !loginPassword.value) {
-        alert("Plaease enter All Fields!");
-      }
-      const { data, error } = await client.auth.signInWithPassword({
-        email: loginEmail.value,
-        password: loginPassword.value,
+loginBtn.addEventListener("click", async () => {
+  try {
+    if (!loginEmail.value || !loginPassword.value) {
+      alert("Please enter all fields!");
+      return; // Stop further execution
+    }
+
+    const { data, error } = await client.auth.signInWithPassword({
+      email: loginEmail.value,
+      password: loginPassword.value,
+    });
+
+    if (error) {
+      alert("Login failed!");
+      console.log(error.message);
+      return;
+    }
+
+    // Admin check
+    if (loginEmail.value === "abihajawed@gmail.com" && loginPassword.value === "abiha1234") {
+      Swal.fire({
+        title: "Successfully Logged in!\nWelcome Admin!",
+        icon: "success",
+        draggable: true,
+        timer: 2000,
       });
 
-      if (error) {
-        alert("Login failed!");
-        console.log(error.message);
-      } else {
-        console.log(data);
+      setTimeout(() => {
+        window.location.href = "adminPage.html";
+      }, 2000);
 
-        Swal.fire({
-          title: "Successfully Loged in!\n Redirecting to post Page",
-          icon: "success",
-          draggable: true,
-          timer: 2000,
-        });
+    } else {
+      Swal.fire({
+        title: "Successfully Logged in!\nRedirecting to post Page",
+        icon: "success",
+        draggable: true,
+        timer: 2000,
+      });
 
-        setTimeout(() => {
-          window.location.href = "create.html";
-        }, 2000);
-      }
-    } catch (error) {
-      console.log(error);
+      setTimeout(() => {
+        window.location.href = "create.html";
+      }, 2000);
     }
-  });
 
-// User dataa
+    console.log(data);
 
-async function getUserData() {
-  try {
-    const showUserName = document.getElementById("showUserName");
-    const { data, error } = await client.auth.getUser();
-    console.log(data, "user data");
-    showUserName.innerHTML = data.user.user_metadata.username;
-    if (error) {
-      console.log(error, "GEtting user error", error.message);
-    }
   } catch (error) {
-    console.log(error, "Error in getting user", error.message);
-  }
-}
-
-getUserData();
-
-let currentIndex = 0;
-let quizQuestions = [];
-
-// Load quiz on page start
-document.addEventListener("DOMContentLoaded", loadQuiz);
-
-async function loadQuiz() {
-  const { data, error } = await supabase
-    .from("questions")
-    .select("*");
-
-  if (error) {
     console.log(error);
-    return;
   }
+});
 
-  quizQuestions = data;
 
-  showQuestion();
-}
 
-function showQuestion() {
-  if (currentIndex >= quizQuestions.length) {
-    document.getElementById("quizBox").innerHTML = `
-       <h2>Quiz Completed 🎉</h2>
-    `;
-    return;
-  }
-
-  const q = quizQuestions[currentIndex];
-
-  document.getElementById("questionText").innerText = q.question;
-
-  document.getElementById("optA").innerText = q.optionA;
-  document.getElementById("optB").innerText = q.optionB;
-  document.getElementById("optC").innerText = q.optionC;
-  document.getElementById("optD").innerText = q.optionD;
-}
-
-// Next Button
-function nextQuestion() {
-  currentIndex++;
-  showQuestion();
-}
