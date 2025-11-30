@@ -370,4 +370,85 @@ input:focus {
         font-size: 14px;
     }
 }
+.container-box {
+    background: linear-gradient(135deg, #b57aff, #ffb6e6);
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  #quizBox {
+    width: 420px;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(18px);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    animation: fadeIn 0.8s ease;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+  }
+  
+  #questionText {
+    font-size: 22px;
+    color: #4a0072;
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+  
+  /* Buttons */
+  .optionBtn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    background: rgba(255, 255, 255, 0.45);
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    color: #4a0072;
+    font-weight: 500;
+  }
+  
+  .optionBtn:hover {
+    background: rgba(255, 255, 255, 0.75);
+    transform: scale(1.03);
+  }
+  
+  /* Next Button */
+  .nextBtn {
+    padding: 12px 30px;
+    background: linear-gradient(135deg, #7b2fff, #ff54c6);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: 0.3s ease;
+    font-weight: 600;
+  }
+  
+  .nextBtn:hover {
+    opacity: 0.85;
+    transform: translateY(-2px);
+  }
+  
+  /* Fade animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
 

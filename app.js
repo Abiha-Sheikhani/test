@@ -129,3 +129,48 @@ async function getUserData() {
 }
 
 getUserData();
+
+let currentIndex = 0;
+let quizQuestions = [];
+
+// Load quiz on page start
+document.addEventListener("DOMContentLoaded", loadQuiz);
+
+async function loadQuiz() {
+  const { data, error } = await supabase
+    .from("questions")
+    .select("*");
+
+  if (error) {
+    console.log(error);
+    return;
+  }
+
+  quizQuestions = data;
+
+  showQuestion();
+}
+
+function showQuestion() {
+  if (currentIndex >= quizQuestions.length) {
+    document.getElementById("quizBox").innerHTML = `
+       <h2>Quiz Completed 🎉</h2>
+    `;
+    return;
+  }
+
+  const q = quizQuestions[currentIndex];
+
+  document.getElementById("questionText").innerText = q.question;
+
+  document.getElementById("optA").innerText = q.optionA;
+  document.getElementById("optB").innerText = q.optionB;
+  document.getElementById("optC").innerText = q.optionC;
+  document.getElementById("optD").innerText = q.optionD;
+}
+
+// Next Button
+function nextQuestion() {
+  currentIndex++;
+  showQuestion();
+}
