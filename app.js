@@ -26,8 +26,10 @@ btn &&
             data: {
               username: username.value,
             },
+            
           },
         });
+   
 
         if (data) {
           console.log(data.user.user_metadata);
@@ -64,6 +66,21 @@ btn &&
 
           window.location.href = "login.html";
           // }, 2000)
+            const { data:{mydata}, error:{myerror} } = await client
+      .from("users_list")   // your table name
+      .insert([
+        {
+        email: email.value,
+
+        username: username.value
+        }
+      ]);
+
+  
+    if (myerror) {
+      console.log(error);
+      alert("Error inserting data!");
+    } 
         } else {
           console.log(error, error.message);
         }

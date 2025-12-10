@@ -7,24 +7,42 @@ const client = createClient(ProjectURL, ProjectKey);
 const userIdEl = document.getElementById("userId");
 const userNameEl = document.getElementById("userName");
 const userEmailEl = document.getElementById("userEmail");
+const username = document.getElementById("username");
+const email = document.getElementById("email");
+const password = document.getElementById("password");
 const logoutBtn = document.getElementById("logoutBtn");
+const containerr = document.getElementById('usersBody')
 
 async function loadUser() {
-  const { data: { user }, error } = await client.auth.getUser();
 
-  if (error || !user) {
-    alert("No user logged in. Redirecting to login page.");
-    window.location.href = "index.html";
+
+  const { data, error } = await client
+    .from("users_list")
+    .select("*")
+    .order("id", { ascending: true });
+
+  if (error) {
+  
+    console.error(error);
     return;
   }
 
-  userIdEl.innerText = user.id;
-  userNameEl.innerText = user.user_metadata?.username || "N/A";
-  userEmailEl.innerText = user.email;
+else{
+  console.log(data);
+  data.map((user)=>{
+containerr.innerHTML += `
+      <td>${user.id}</td>
+      <td>${user.username}</td>
+      <td>${user.email}</td>
+    `;
+  })
+
+}
+  
 }
 
 // Logout
-logoutBtn.addEventListener("click", async () => {
+logoutBtn && logoutBtn.addEventListener("click", async () => {
   const { error } = await client.auth.signOut();
   if (error) {
     alert("Error logging out");
@@ -34,3 +52,4 @@ logoutBtn.addEventListener("click", async () => {
 });
 
 loadUser();
+

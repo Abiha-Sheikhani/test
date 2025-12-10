@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Questions</title>
+    <style>
+  body {
+  background-color: #F7E1F0;
+  color: #6A4C93;
+  font-family: 'Poppins', sans-serif;
+  padding: 40px 20px;
+}
+
+h2 {
+  text-align: center;
+  color: #A87A87;
+  margin-bottom: 35px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* Table Wrapper */
+.table-container {
+  max-width: 1000px;
+  margin: auto;
+  overflow-x: auto;
+}
+
+/* Table Styling */
+table {
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 15px;
+  overflow: hidden;
+  border-collapse: collapse;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  table-layout: fixed; /* ensures columns don't shrink too much */
+}
+
+th {
+  background-color: #6A4C93;
+  color: #fff;
+  padding: 14px 10px;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+}
+
+td {
+  padding: 12px 8px;
+  font-size: 15px;
+  border-bottom: 1px solid #f0d8e4;
+  word-wrap: break-word; /* prevent overflow */
+}
+
+/* Hover effect */
+tr:hover {
+  background-color: #f9e8f2;
+  transition: 0.2s ease-in-out;
+}
+
+/* Buttons */
+.btn {
+  padding: 10px 18px; /* bigger clickable area */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: 0.2s;
+  display: inline-block;
+  min-width: 80px; /* ensure buttons in Actions column are wider */
+  text-align: center;
+}
+
+.editBtn {
+  background-color: #A87A87;
+  color: white;
+}
+
+.editBtn:hover {
+  background-color: #916970;
+}
+
+.deleteBtn {
+  background-color: #FF6B6B;
+  color: white;
+}
+
+.deleteBtn:hover {
+  background-color: #ff4c4c;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  td, th {
+    padding: 10px 6px;
+    font-size: 14px;
+  }
+
+  .btn {
+    padding: 8px 16px;
+    font-size: 14px;
+    min-width: 70px;
+  }
+}
+
+@media (max-width: 480px) {
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  thead {
+    display: none; /* hide header on small screens */
+  }
+
+  tr {
+    margin-bottom: 15px;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    padding: 10px;
+  }
+
+  td {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 12px;
+    font-size: 14px;
+    border-bottom: 1px solid #f0d8e4;
+  }
+
+  td::before {
+    content: attr(data-label); /* show header label */
+    font-weight: 600;
+    color: #6A4C93;
+    margin-right: 10px;
+  }
+
+  .btn {
+    padding: 10px;
+    font-size: 14px;
+    min-width: 100px;
+    margin-top: 5px;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<h2>All Questions</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Question</th>
+            <th>Option 1</th>
+            <th>Option 2</th>
+            <th>Option 3</th>
+            <th>Option 4</th>
+            <th>Answer</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="questionsBody">
+
+    </tbody>
+</table>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script >
+    const ProjectURL = "https://hcxpzqislizvixqxevnv.supabase.co";
+const ProjectKey =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjeHB6cWlzbGl6dml4cXhldm52Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ0MzYwNTIsImV4cCI6MjA4MDAxMjA1Mn0.U2hDQtk08WR2fdrLULypb12A-mJEowFF_re_T8sxp80";
+const { createClient } = supabase;
+const client = createClient(ProjectURL, ProjectKey);
+const questionsBody = document.getElementById("questionsBody");
+
+async function loadQuestions() {
+  const { data, error } = await client
+    .from("questions")
+    .select("*")
+    .order("id", { ascending: true });
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+ 
+
+  data.map(q => {
+
+
+    questionsBody.innerHTML += `
+      <td>${q.id}</td>
+      <td>${q.question}</td>
+      <td>${q.option_1}</td>
+      <td>${q.option_2}</td>
+      <td>${q.option_3}</td>
+      <td>${q.option_4}</td>
+       <td>${q.Answer}</td>
+      <td>
+        <button class="btn editBtn" onclick="editQuestion(${q.id})">Edit</button>
+        <button class="btn deleteBtn" onclick="deleteQuestion(${q.id})">Delete</button>
+      </td>
+    `;
+
+ 
+  });
+}
+
+// DELETE question
+async function deleteQuestion(id) {
+  const { error } = await client
+    .from("questions")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    alert("Failed to delete question");
+    return;
+  }
+
+  alert("Question deleted");
+window.location.reload();
+}
+
+// EDIT question
+// EDIT full question
+async function editQuestion(id) {
+  let newQuestion = prompt("Enter updated question:");
+  if (!newQuestion) return;
+
+  let op1 = prompt("Enter Option 1:");
+  if (!op1) return;
+
+  let op2 = prompt("Enter Option 2:");
+  if (!op2) return;
+
+  let op3 = prompt("Enter Option 3:");
+  if (!op3) return;
+
+  let op4 = prompt("Enter Option 4:");
+  if (!op4) return;
+
+  let correct = prompt("Enter Correct Answer:");
+  if (!correct) return;
+
+  const { error } = await client
+    .from("questions")
+    .update({
+      question: newQuestion,
+      option_1: op1,
+      option_2: op2,
+      option_3: op3,
+      option_4: op4,
+      Answer: correct
+    })
+    .eq("id", id);
+
+  if (error) {
+    alert("Failed to update");
+    return;
+  }
+
+  alert("Updated successfully");
+  window.location.reload();
+}
+
+
+loadQuestions();
+
+</script>
+</body>
+</html>
