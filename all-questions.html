@@ -225,8 +225,12 @@ async function deleteQuestion(id) {
     alert("Failed to delete question");
     return;
   }
-
-  alert("Question deleted");
+ Swal.fire({
+              title: " Question Deleted Successfully!",
+              icon: "success",
+              draggable: true,
+              timer: 2000,
+            });
 window.location.reload();
 }
 
@@ -267,8 +271,12 @@ async function editQuestion(id) {
     alert("Failed to update");
     return;
   }
-
-  alert("Updated successfully");
+ Swal.fire({
+              title: " Question Updated Successfully!",
+              icon: "success",
+              draggable: true,
+              timer: 2000,
+            });
   window.location.reload();
 }
 
