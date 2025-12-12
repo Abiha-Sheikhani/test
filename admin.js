@@ -56,9 +56,19 @@ document.getElementById("saveBtn").addEventListener("click", async () => {
   
     if (error) {
       console.log(error);
-      alert("Error inserting data!");
+    Swal.fire({
+              title: " Error Inserting Data!",
+              icon: "danger",
+              draggable: true,
+              timer: 2000,
+            });
     } else {
-      alert("Question added successfully!");
+      Swal.fire({
+              title: " Question Added Successfully!",
+              icon: "success",
+              draggable: true,
+              timer: 2000,
+            });
       
       // Clear fields
       document.getElementById("question").value = "";

@@ -68,9 +68,10 @@ tr:hover {
   font-size: 15px;
   transition: 0.2s;
   display: inline-block;
-  min-width: 80px; /* ensure buttons in Actions column are wider */
+  
   text-align: center;
 }
+
 
 .editBtn {
   background-color: #A87A87;
@@ -153,7 +154,7 @@ tr:hover {
 <table>
     <thead>
         <tr>
-            <th>ID</th>
+         
             <th>Question</th>
             <th>Option 1</th>
             <th>Option 2</th>
@@ -167,7 +168,9 @@ tr:hover {
 
     </tbody>
 </table>
-
+<h2>
+<button class="btn editBtn" id="back">Back</button>
+</h2>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script >
     const ProjectURL = "https://hcxpzqislizvixqxevnv.supabase.co";
@@ -176,6 +179,7 @@ const ProjectKey =
 const { createClient } = supabase;
 const client = createClient(ProjectURL, ProjectKey);
 const questionsBody = document.getElementById("questionsBody");
+const back = document.getElementById('back')
 
 async function loadQuestions() {
   const { data, error } = await client
@@ -194,7 +198,6 @@ async function loadQuestions() {
 
 
     questionsBody.innerHTML += `
-      <td>${q.id}</td>
       <td>${q.question}</td>
       <td>${q.option_1}</td>
       <td>${q.option_2}</td>
@@ -271,7 +274,9 @@ async function editQuestion(id) {
 
 
 loadQuestions();
-
+back.addEventListener('click',()=>{
+    window.location.href = "./adminPage.html"
+})
 </script>
 </body>
 </html>
